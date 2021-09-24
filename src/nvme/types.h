@@ -150,6 +150,7 @@ enum nvme_constants {
 	NVME_ID_NS_LIST_MAX		= 1024,
 	NVME_ID_SECONDARY_CTRL_MAX	= 127,
 	NVME_ID_ND_DESCRIPTOR_MAX	= 16,
+	NVME_ID_CP_NUMREC_MAX		= 127,	
 	NVME_FEAT_LBA_RANGE_MAX		= 64,
 	NVME_LOG_ST_MAX_RESULTS		= 20,
 	NVME_LOG_TELEM_BLOCK_SIZE	= 512,
@@ -167,6 +168,7 @@ enum nvme_constants {
 enum nvme_csi {
 	NVME_CSI_NVM			= 0,
 	NVME_CSI_ZNS			= 2,
+	NVME_CSI_CP			= 3,
 };
 
 /**
@@ -2081,6 +2083,39 @@ struct nvme_id_ctrl_nvm {
     __u64    dmsl;
     __u8     rsvd16[4080];
 };
+
+/**
+ * struct nvme_cp_ptd - Downloadable Program Type Descriptor
+ * ptype: Program Type
+ * maxps: Maximum size per downloaded progam
+ * maxpb: Maximum bytes for all downloaded progams
+ */
+struct nvme_cp_ptd {
+	__u8	ptype;
+	__u8	rsvd1[7];
+	__u64	maxps;
+	__u64	maxpb;
+	__u64	rsvd24;
+};
+
+/**
+ * struct nvme_id_ctrl_cp - identify controller data structure, computational programs I/O command set
+ * numrec: Number of Downloadable Program Type Records
+ * maxmemr: Maximum number of ranges in a Memory Range Set
+ * maxmemrs: Maximum number of Memory Range Sets
+ * mrg: Memory Range Granularity
+ * ptd: Downloadable Program Type Descriptor
+ */
+#pragma pack(push, 1)
+struct nvme_id_ctrl_cp {
+	__u16			numrec;
+	__u8    		maxmemr;
+	__u16   		maxmemrs;
+	__u16   		mrg;
+	__u8			rsvd7[25];
+	struct nvme_cp_ptd 	ptd[NVME_ID_CP_NUMREC_MAX]; 
+};
+#pragma pack(pop)
 
 /**
  * struct nvme_zns_lbafe -

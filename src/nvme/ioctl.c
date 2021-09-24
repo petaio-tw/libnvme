@@ -523,6 +523,12 @@ int nvme_nvm_identify_ctrl(int fd, struct nvme_id_ctrl_nvm *id)
 	return nvme_identify_ctrl_csi(fd, NVME_CSI_NVM, id);
 }
 
+int nvme_cp_identify_ctrl(int fd, struct nvme_id_ctrl_cp *id) 
+{
+	BUILD_ASSERT(sizeof(struct nvme_id_ctrl_cp ) == 4096);
+	return nvme_identify_ctrl_csi(fd, NVME_CSI_CP, id);
+}
+
 int nvme_get_log(int fd, enum nvme_cmd_get_log_lid lid, __u32 nsid, __u64 lpo,
 		 __u8 lsp, __u16 lsi, bool rae, __u8 uuidx, enum nvme_csi csi,
 		 __u32 len, void *log)

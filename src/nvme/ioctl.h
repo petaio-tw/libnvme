@@ -1072,6 +1072,17 @@ int nvme_identify_ctrl_csi(int fd, __u8 csi, void *data);
 int nvme_nvm_identify_ctrl(int fd, struct nvme_id_ctrl_nvm *id);
 
 /**
+ * nvme_cp_identify_ctrl() -
+ * @fd:	File descriptor of nvme device
+ * @id:	User space destination address to transfer the data
+ *
+ * Return: The nvme command status if a response was received (see
+ * &enum nvme_status_field) or -1 with errno set otherwise.
+ */
+int nvme_cp_identify_ctrl(int fd, struct nvme_id_ctrl_cp *id);
+
+
+/**
  * nvme_identify_iocs() -
  * @fd:		File descriptor of nvme device
  * @cntlid:	Controller ID
