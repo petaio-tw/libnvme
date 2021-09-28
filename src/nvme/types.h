@@ -168,7 +168,7 @@ enum nvme_constants {
 enum nvme_csi {
 	NVME_CSI_NVM			= 0,
 	NVME_CSI_ZNS			= 2,
-	NVME_CSI_CP			= 3,
+	NVME_CSI_CP			= 0xC0,
 };
 
 /**
